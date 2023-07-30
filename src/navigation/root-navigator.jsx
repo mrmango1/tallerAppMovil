@@ -12,7 +12,7 @@ const RootNavigator = () => {
       drawerStyle: styles.drawerStyles,
       drawerType: 'front',
       headerShown: false
-    }} drawerContent={(props) => <CustomDrawer {...props} />}>
+    }} initialRouteName='store' drawerContent={(props) => <CustomDrawer {...props} />}>
       {ScreensArray.map((_, i) => (
         <Drawer.Screen key={i} name={_.route} component={_.component}
           options={{
