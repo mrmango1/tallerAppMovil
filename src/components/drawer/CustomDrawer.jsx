@@ -1,6 +1,6 @@
 import React, { useReducer, useRef } from 'react'
 import { useDrawerProgress } from '@react-navigation/drawer'
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Animated, { interpolate, useAnimatedStyle, useDerivedValue, withSpring, withTiming } from 'react-native-reanimated'
 import DrawerItemList from './DrawerItemList'
 import { colors, constant } from './constants'
@@ -16,7 +16,10 @@ const ProfileMenu = [
 const ProfileItem = ({ label, onPress, type, name, navigation }) => {
   const navigate = () => {
     if (onPress === 'Login') {
-      navigation.replace('Login')
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }]
+      })
     } else {
       navigation.navigate(onPress)
     }
@@ -32,7 +35,7 @@ const ProfileItem = ({ label, onPress, type, name, navigation }) => {
 }
 
 const CustomDrawer = (props) => {
-  const { state, descriptors, navigation } = props
+  const { navigation } = props
   const scrollRef = useRef(null)
   const [show, toggleProfile] = useReducer(s => !s, false)
 
