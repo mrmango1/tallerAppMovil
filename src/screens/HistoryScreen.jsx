@@ -3,6 +3,7 @@ import { Text, View, FlatList, StyleSheet } from 'react-native'
 import { Avatar, Card, useTheme } from 'react-native-paper'
 import { Header, Background } from '../components'
 import { employees } from '../core/data'
+import Constants from 'expo-constants'
 
 const LeftContent = props => <Avatar.Icon {...props} icon="account" />
 
@@ -24,6 +25,7 @@ const HistoryScreen = () => {
   const styles = makeStyles(colors)
   return (
     <Background>
+      <View style={{ height: Constants.statusBarHeight }} />
       <Header>Historial de ventas</Header>
       <FlatList
       ItemSeparatorComponent={() => <View style={{ height: 10 }}/>}
@@ -36,12 +38,6 @@ const HistoryScreen = () => {
 }
 
 const makeStyles = (colors) => StyleSheet.create({
-  header: {
-    fontSize: 21,
-    color: colors.primary,
-    fontWeight: 'bold',
-    paddingVertical: 12
-  },
   listContainer: {
     flexGrow: 1,
     padding: 20,
