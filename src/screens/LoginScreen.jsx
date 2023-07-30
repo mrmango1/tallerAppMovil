@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-paper'
-import { theme } from '../core/theme'
+import { Text, useTheme } from 'react-native-paper'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
-import { Background, Logo, Header, Button, TextInput } from '../components'
+import { Background, Logo, Header, TextInput, Button } from '../components'
 
 export default function LoginScreen ({ navigation }) {
+  const { colors } = useTheme()
+  const styles = makeStyles(colors)
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
@@ -69,7 +70,7 @@ export default function LoginScreen ({ navigation }) {
   )
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   forgotPassword: {
     width: '100%',
     alignItems: 'flex-end',
@@ -81,10 +82,10 @@ const styles = StyleSheet.create({
   },
   forgot: {
     fontSize: 13,
-    color: theme.colors.secondary
+    color: colors.primary
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary
+    color: colors.primary
   }
 })
