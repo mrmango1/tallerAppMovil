@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet, SectionList } from 'react-native'
-import { Card, useTheme } from 'react-native-paper'
+import { Card } from 'react-native-paper'
 import { useProducts } from '../hooks/storeApi'
 import { Background, Header, Button } from '../components'
 

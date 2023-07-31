@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, FlatList, StyleSheet, Image, Text } from 'react-native'
 import { Card, useTheme, Button } from 'react-native-paper'
-import { Background, BackButton } from '../components'
+import { Background } from '../components'
 import { useProducts } from '../hooks/storeApi'
 
 const ShoppingCartCard = ({ item }) => {
