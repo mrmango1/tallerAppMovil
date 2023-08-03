@@ -2,14 +2,18 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { ProductListScreen, HomeScreen, ShoppingCartScreen } from '../screens'
+import CustomNavigationBar from '../components/AppBar'
 
 const Tab = createBottomTabNavigator()
 
 const ProductNavigator = () => {
   return (
-    <Tab.Navigator initialRouteName='Inicio' screenOptions={{
-      tabBarActiveTintColor: '#e91e63'
-    }}>
+    <Tab.Navigator
+      initialRouteName='Inicio'
+      screenOptions={{
+        tabBarActiveTintColor: '#e91e63',
+        header: (props) => <CustomNavigationBar {...props} />
+      }}>
       <Tab.Screen name="Inicio" component={HomeScreen} options={{
         tabBarLabel: 'Inicio',
         tabBarIcon: ({ color, size }) => (
