@@ -59,8 +59,6 @@ const DrawerItemList = ({ state, descriptors, navigation }) => {
              activeItemColor={activeItemColor}
            />
           )
-        } else {
-          return <></>
         }
       })}
     </View>

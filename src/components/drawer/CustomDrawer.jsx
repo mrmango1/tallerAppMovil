@@ -1,7 +1,7 @@
 import React, { useReducer, useRef } from 'react'
 import { useDrawerProgress } from '@react-navigation/drawer'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Animated, { interpolate, useAnimatedStyle, useDerivedValue, withSpring, withTiming } from 'react-native-reanimated'
+import Animated, { interpolate, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated'
 import DrawerItemList from './DrawerItemList'
 import { colors, constant } from './constants'
 import Constants from 'expo-constants'
