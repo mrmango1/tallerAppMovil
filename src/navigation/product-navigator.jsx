@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import CustomNavigationBar from '../components/AppBar'
+import CustomAppBar from '../components/AppBar'
 import { Text } from 'react-native-paper'
 
 const Tab = createBottomTabNavigator()
@@ -16,7 +16,7 @@ const ProductNavigator = () => {
       initialRouteName='Inicio'
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
-        header: (props) => <CustomNavigationBar {...props} />
+        header: (props) => <CustomAppBar {...props} />
       }}>
       <Tab.Screen name="Inicio" options={{
         tabBarLabel: 'Inicio',
