@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
+import { emailValidator, passwordValidator } from '../helpers/validators'
 import { Background, Logo, Header, TextInput, Button } from '../components'
+import { loginUser } from '../hooks/authApi'
+import { _storeUser } from '../hooks/asynStorage'
 
 export default function LoginScreen ({ navigation }) {
   const { colors } = useTheme()
@@ -11,18 +12,27 @@ export default function LoginScreen ({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
+    validateInputs()
+    const { error, message, user } = await loginUser({ email: email.value, password: password.value })
+    if (error) {
+      console.log(message)
+    } else {
+      await _storeUser(user)
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }]
+      })
+    }
+  }
+
+  const validateInputs = () => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
-      return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Home' }]
-    })
   }
 
   return (
