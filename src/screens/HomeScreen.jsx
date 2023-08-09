@@ -1,25 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, FlatList, Text, Image } from 'react-native'
-import { useTheme, FAB } from 'react-native-paper'
-import { Background } from '../components'
+import { useTheme, Portal, Modal } from 'react-native-paper'
+import { Background, Button } from '../components'
 import { useProducts } from '../hooks/storeApi'
+import ProductDetailModal from './ProductDetailModal'
 
-const ProductCard = ({ item, styles }) => {
+const ProductCard = ({ item, styles, onPress }) => {
   return (
       <View style={[styles.twoColumns, styles.card]}>
         <Text>{item.title}</Text>
-        <Image style={styles.productImage} source={{ uri: item.image }} />
+        <Image style={styles.productImage} source={{ uri: item.images[0] }} />
         <View>
           <Text variant="bodyMedium">Precio: {item.price}</Text>
         </View>
-        <View>
-          <FAB mode='flat' size='small' icon="cart-plus" label="Carrito" onPress={() => console.log('Pressed')}></FAB>
-        </View>
+        <Button mode="contained" onPress={() => onPress(item)}>Ver</Button>
       </View>
   )
 }
 
 const HomeScreen = () => {
+  const [productDetail, setProductDetail] = useState({ visible: false })
+  const showModal = (item) => setProductDetail({ ...item, visible: true })
+  const hideModal = () => setProductDetail({ ...productDetail, visible: false })
   const { products } = useProducts()
   const { colors } = useTheme()
   const styles = makeStyles(colors)
@@ -30,8 +32,13 @@ const HomeScreen = () => {
         style={[styles.listContainer]}
         data={products}
         numColumns={2}
-        renderItem={({ item }) => <ProductCard item={item} styles={styles} />}
+        renderItem={({ item }) => <ProductCard item={item} styles={styles} onPress={showModal} />}
         keyExtractor={item => item.id}/>
+      <Portal>
+        <Modal visible={productDetail.visible} onDismiss={hideModal} contentContainerStyle={styles.modalContainer}>
+          <ProductDetailModal {...productDetail} />
+        </Modal>
+      </Portal>
     </Background>
   )
 }
@@ -56,6 +63,12 @@ const makeStyles = (colors) => StyleSheet.create({
   productImage: {
     width: 100,
     height: 60
+  },
+  modalContainer: {
+    marginHorizontal: '7%',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    padding: 20
   }
 })
 
