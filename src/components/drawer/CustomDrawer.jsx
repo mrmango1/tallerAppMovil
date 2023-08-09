@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react'
+import React, { useReducer, useRef, useEffect, useState } from 'react'
 import { useDrawerProgress } from '@react-navigation/drawer'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Animated, { interpolate, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated'
@@ -6,6 +6,7 @@ import DrawerItemList from './DrawerItemList'
 import { colors, constant } from './constants'
 import Constants from 'expo-constants'
 import Icon, { Icons } from '../Icons'
+import { _retrieveUser } from '../../hooks/asynStorage'
 
 const ProfileMenu = [
   { label: 'Mi Perfil', icon: 'person', iconType: Icons.MaterialIcons, screen: 'user' },
@@ -36,6 +37,7 @@ const ProfileItem = ({ label, onPress, type, name, navigation }) => {
 
 const CustomDrawer = (props) => {
   const { navigation } = props
+  const [user, setUser] = useState({ name: '', lastname: '', email: '' })
   const scrollRef = useRef(null)
   const [show, toggleProfile] = useReducer(s => !s, false)
 
@@ -79,13 +81,17 @@ const CustomDrawer = (props) => {
     }
   })
 
+  useEffect(() => {
+    _retrieveUser().then(user => setUser(user))
+  }, [])
+
   return (
   <View style={styles.container}>
     <TouchableOpacity onPress={fun}>
         <Animated.View style={[styles.marginTop, styles.view, styles.row]}>
           <Image style={styles.profile} source={require('../../assets/avatar.png')} />
           <View style={styles.textContainer}>
-            <Text style={styles.headerTitle}>Anderson Grefa</Text>
+            <Text style={styles.headerTitle}>{user.name} {user.lastname}</Text>
             <Text style={styles.text}>Administrador</Text>
           </View>
         </Animated.View>
@@ -99,7 +105,7 @@ const CustomDrawer = (props) => {
             { backgroundColor: colors.primary },
             menuStyles
           ]}>
-            <Text>andersongrefa@gmail.com</Text>
+            <Text>{user.email}</Text>
             <View style={styles.separator} />
             {ProfileMenu.map((_, i) => (
               <ProfileItem key={i}
