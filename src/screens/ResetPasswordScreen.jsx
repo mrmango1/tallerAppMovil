@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Background, Logo, Header, Button, TextInput, BackButton } from '../components'
-import { emailValidator } from '../helpers/emailValidator'
+import { emailValidator } from '../helpers/validators'
 
 export default function ResetPasswordScreen ({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
