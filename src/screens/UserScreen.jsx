@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Avatar, Card, IconButton, useTheme } from 'react-native-paper'
 import { Header, Background } from '../components'
 import Icon, { Icons } from '../components/Icons'
+import { _retrieveUser } from '../hooks/asynStorage'
 
 const LeftContent = props => <Avatar.Icon {...props} icon="account" />
 const RightContent = props => <IconButton {...props} icon="chevron-right" onPress={() => console.log('Pressed')} />
@@ -80,9 +81,13 @@ const IconLabel = ({ icon, label, props }) => {
 }
 
 const PerfilHeader = () => {
+  const [user, setUser] = useState({ name: '', lastname: '', email: '', age: '' })
+  useEffect(() => {
+    _retrieveUser().then(user => setUser(user))
+  }, [])
   return (
     <Card style={[styles.card, styles.transparent]} mode='contained'>
-    <Card.Title titleStyle={styles.cardTitle} title='Anderson Grefa' subtitle='Admin' left={LeftContent} />
+    <Card.Title titleStyle={styles.cardTitle} title={`${user.name} ${user.lastname}`} subtitle={user.email} left={LeftContent} right={() => <Text>{user.age} años</Text>} />
     <Card.Content>
       <View style={styles.rowAlign}>
       {headerButtonList.map((item, index) => (
