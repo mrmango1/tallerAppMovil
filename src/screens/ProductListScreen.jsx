@@ -49,7 +49,7 @@ const ProductListScreen = () => {
               )}/>
       <Portal>
         <Modal visible={productDetail.visible} onDismiss={hideModal} contentContainerStyle={styles.modalContainer}>
-          <ProductDetailModal {...productDetail} />
+          <ProductDetailModal {...productDetail} hideModal={hideModal} />
         </Modal>
       </Portal>
     </Background>
