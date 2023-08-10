@@ -106,6 +106,10 @@ const ShoppingCartScreen = ({ navigation }) => {
     }
   }
   , [navigation.isFocused(), productDetail.visible])
+
+  const iva = shoppingCart?.totalPrice?.toFixed(2) * 0.12 ?? 0
+  const subtotal = shoppingCart?.totalPrice?.toFixed(2) - iva ?? 0
+  const total = shoppingCart?.totalPrice?.toFixed(2) ?? 0
   return (
     <Background>
       {!shoppingCart && <Text>No hay productos en el carrito</Text>}
@@ -127,7 +131,9 @@ const ShoppingCartScreen = ({ navigation }) => {
         <Dialog visible={buyDialog} onDismiss={hideBuyDialog}>
             <Dialog.Title>Detalles de la compra</Dialog.Title>
             <Dialog.Content>
-              <Text variant="bodyMedium">Confirmar la compra de un total de: ${shoppingCart?.totalPrice?.toFixed(2) ?? 0}</Text>
+            <Text variant="bodyMedium">Iva: ${iva}</Text>
+            <Text variant="bodyMedium">Subtotal: ${subtotal}</Text>
+              <Text variant="bodyMedium">Total: ${total}</Text>
             </Dialog.Content>
             <Dialog.Actions>
               <Text>Se cerrará: {seconds ?? 0} seg.</Text>
