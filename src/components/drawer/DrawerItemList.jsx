@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: constant.borderRadius,
     marginHorizontal: constant.SPACING / 2,
-    paddingVertical: 100,
     padding: constant.SPACING / 1.5
   }
 })
